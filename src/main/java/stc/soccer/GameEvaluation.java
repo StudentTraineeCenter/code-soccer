@@ -6,53 +6,31 @@ import java.util.Scanner;
 public class GameEvaluation {
 
     private final SoccerGame game;
+    private boolean turn;
 
     public GameEvaluation(SoccerGame game) {
         this.game = game;
-
+        this.turn = true;
     }
 
     public void play(Scanner in) {
-        boolean turn = true;
-        boolean end = false;
-        System.out.println("Your Code Soccer game has been initialized.");
-
-        while (!end) {
+        while (true) {
             turnOutput(turn);
 
             FieldPoint destination = new FieldPoint(in.nextInt(), in.nextInt());
 
-            if (isEndOfGame(destination)) {
-                end = true;
-                System.out.println("End of game.");
-                break;
-            }
-
-            System.out.println("Game continues");
-
             while (!isMoveValid(destination)) {
                 System.out.println("Specified move is not valid. Try again.");
                 destination = new FieldPoint(in.nextInt(), in.nextInt());
-
-                if (isEndOfGame(destination)) {
-                    end = true;
-                    System.out.println("End of game.");
-                    break;
-                }
             }
 
-            System.out.println("Move is valid.");
-
-            if (!isMoveBounce(destination)) {
-                System.out.println("Move doesn't bounce.");
-                turn = !turn;
+            if (isPointInsideGoals(destination)) {
+                break;
             }
 
+            checkBounce(destination);
             game.addMove(destination);
-
         }
-
-        System.out.println("End lol");
     }
 
     private void turnOutput(boolean turn) {
@@ -66,9 +44,10 @@ public class GameEvaluation {
     }
 
     private boolean isMoveValid(FieldPoint dest) {
-        return isPointInsideBounds(dest) && isMoveMade(dest) &&
+        return (isPointInsideBounds(dest) && isMoveMade(dest) &&
                 isPointCloseEnough(dest) && !isMoveInHistory(dest) &&
-                !(isPointOnBounds(game.getBallPosition()) && isPointOnBounds(dest));
+                !(isPointOnBounds(game.getBallPosition()) && isPointOnBounds(dest))) ||
+                isPointInsideGoals(dest);
     }
 
     private boolean isPointInsideBounds(FieldPoint point) {
@@ -87,7 +66,7 @@ public class GameEvaluation {
         return (game.getBallPosition().row() != point.row() || game.getBallPosition().column() != point.column());
     }
 
-    private boolean isEndOfGame(FieldPoint point) {
+    private boolean isPointInsideGoals(FieldPoint point) {
         return isPointCloseEnough(point) &&
                 (Math.abs(point.column() - game.getColumns() / 2) < 2) &&
                 (point.row() == -1 || point.row() == game.getRows());
@@ -110,8 +89,12 @@ public class GameEvaluation {
         return false;
     }
 
-    private boolean isMoveBounce(FieldPoint dest) {
-        return game.getMoveHistory().containsKey(dest) || isPointOnBounds(dest);
+    private void checkBounce(FieldPoint dest) {
+        if (game.getMoveHistory().containsKey(dest) || isPointOnBounds(dest)) {
+            System.out.println("It's a bounce!!!");
+        } else {
+            turn = !turn;
+        }
     }
 
     private boolean isPointOnBounds(FieldPoint point) {

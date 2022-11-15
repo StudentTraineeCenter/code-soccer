@@ -88,8 +88,9 @@ public class GameEvaluation {
     }
 
     private boolean isEndOfGame(FieldPoint point) {
-        return isPointCloseEnough(point) && (point.column() == (game.getColumns() / 2) &&
-                (point.row() == -1 || point.row() == game.getRows()));
+        return isPointCloseEnough(point) &&
+                (Math.abs(point.column() - game.getColumns() / 2) < 2) &&
+                (point.row() == -1 || point.row() == game.getRows());
     }
 
     private boolean isMoveInHistory(FieldPoint dest) {

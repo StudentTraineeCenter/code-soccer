@@ -49,13 +49,13 @@ public class GameEvaluation {
 
             System.out.println("Move is valid.");
 
-            game.addMove(destination);
-
-            System.out.println(isMoveBounce(destination));
-
             if (!isMoveBounce(destination)) {
+                System.out.println("Move doesn't bounce.");
                 turn = !turn;
             }
+
+            game.addMove(destination);
+
         }
 
         System.out.println("End lol");
@@ -105,12 +105,10 @@ public class GameEvaluation {
         return false;
     }
 
-    //TODO check whether bounce works properly thanks to the mechanic not working in game
     private boolean isMoveBounce(FieldPoint dest) {
         return game.getMoveHistory().containsKey(dest) || isPointOnBounds(dest);
     }
 
-    //TODO check whether this method can be written in a better manner
     private boolean isPointOnBounds(FieldPoint point) {
         return ((point.row() == 0 || point.row() == game.getRows() - 1) ||
                 (point.column() == 0 || point.column() == game.getColumns() - 1)) &&

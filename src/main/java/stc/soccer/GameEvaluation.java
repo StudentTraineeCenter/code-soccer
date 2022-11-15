@@ -18,13 +18,7 @@ public class GameEvaluation {
         System.out.println("Your Code Soccer game has been initialized.");
 
         while (!end) {
-            if (turn) {
-                System.out.println("Players " + game.getPlayer1() + " turn:");
-            } else {
-                System.out.println("Players " + game.getPlayer2() + " turn:");
-            }
-
-            System.out.println("Current location of ball is " + game.getBallPosition().toString() + ".");
+            turnOutput(turn);
 
             FieldPoint destination = new FieldPoint(in.nextInt(), in.nextInt());
 
@@ -59,6 +53,16 @@ public class GameEvaluation {
         }
 
         System.out.println("End lol");
+    }
+
+    private void turnOutput(boolean turn) {
+        if (turn) {
+            System.out.println("Players " + game.getPlayer1() + " turn:");
+        } else {
+            System.out.println("Players " + game.getPlayer2() + " turn:");
+        }
+
+        System.out.println("Current location of ball is " + game.getBallPosition().toString() + ".");
     }
 
     private boolean isMoveValid(FieldPoint dest) {

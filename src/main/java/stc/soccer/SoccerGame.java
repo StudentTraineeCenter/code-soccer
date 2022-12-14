@@ -8,15 +8,13 @@ public class SoccerGame {
     private FieldPoint currentPosition;
     private Map<FieldPoint, List<FieldPoint>> moveHistory;
     private final String player1;
-    private final String player2;
 
-    public SoccerGame(int columns, int rows, String name1, String name2) {
+    public SoccerGame(int columns, int rows, String name1) {
         this.columns = columns;
         this.rows = rows;
         this.currentPosition = new FieldPoint(columns/2, rows/2);
         this.moveHistory = new HashMap<>();
         this.player1 = name1;
-        this.player2 = name2;
     }
 
     public int getColumns() {
@@ -31,16 +29,12 @@ public class SoccerGame {
         return moveHistory;
     }
 
-    public FieldPoint getBallPosition() {
+    public FieldPoint getCurrentPosition() {
         return currentPosition;
     }
 
     public String getPlayer1() {
         return player1;
-    }
-
-    public String getPlayer2() {
-        return player2;
     }
 
     /**

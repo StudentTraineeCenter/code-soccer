@@ -1,0 +1,39 @@
+package stc.soccer.opponents;
+
+import stc.soccer.FieldPoint;
+import stc.soccer.SoccerGame;
+
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
+
+public class NaiveOpponent implements ArtificialOpponent {
+
+    private final Random rand;
+
+    public NaiveOpponent() {
+        rand = new Random();
+    }
+
+    @Override
+    public FieldPoint makeMove(SoccerGame game) {
+        Set<FieldPoint> triedPoints = new HashSet<>();
+        FieldPoint point = createRandomPoint(game.getCurrentPosition());
+
+        while (!game.isMoveValid(point)) {
+            triedPoints.add(point);
+            point = createRandomPoint(game.getCurrentPosition());
+            while (triedPoints.contains(point)) {
+                point = createRandomPoint(game.getCurrentPosition());
+            }
+        }
+
+        return point;
+    }
+
+    private FieldPoint createRandomPoint(FieldPoint currentPosition) {
+        return new FieldPoint(
+                currentPosition.column() + rand.nextInt(3) - 1,
+                currentPosition.row() + rand.nextInt(3) - 1);
+    }
+}

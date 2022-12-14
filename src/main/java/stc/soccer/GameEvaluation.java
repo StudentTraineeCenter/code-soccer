@@ -8,7 +8,7 @@ public class GameEvaluation {
 
     private final SoccerGame game;
     private boolean turn;
-    private ArtificialOpponent ai;
+    private final ArtificialOpponent ai;
 
     public GameEvaluation(SoccerGame game, ArtificialOpponent ai) {
         this.game = game;
@@ -26,11 +26,22 @@ public class GameEvaluation {
             FieldPoint destination;
             turnOutput(turn);
 
-            FieldPoint destination = new FieldPoint(in.nextInt(), in.nextInt());
-
-            while (!isMoveValid(destination)) {
-                System.out.println("Specified move is not valid. Try again.");
+            //TODO turn decision in method???
+            if (turn) {
                 destination = new FieldPoint(in.nextInt(), in.nextInt());
+            } else {
+                destination = ai.makeMove(game);
+                System.out.println(destination);
+            }
+
+            while (!game.isMoveValid(destination)) {
+                System.out.println("Specified move is not valid. Try again.");
+                if (turn) {
+                    destination = new FieldPoint(in.nextInt(), in.nextInt());
+                } else {
+                    destination = ai.makeMove(game);
+                    System.out.println(destination);
+                }
             }
 
             if (game.isPointInsideGoals(destination)) {
@@ -51,7 +62,7 @@ public class GameEvaluation {
         if (turn) {
             System.out.println("Players " + game.getPlayer1() + " turn:");
         } else {
-            System.out.println("Players " + game.getPlayer2() + " turn:");
+            System.out.println("AIs turn:");
         }
 
         System.out.println("Current location of ball is " + game.getCurrentPosition().toString() + ".");

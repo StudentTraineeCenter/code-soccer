@@ -1,5 +1,7 @@
 package stc.soccer;
 
+import stc.soccer.opponents.NaiveOpponent;
+
 import java.util.Scanner;
 
 public class GameSetup {
@@ -24,8 +26,8 @@ public class GameSetup {
         System.out.println("What is the number of rows?");
         rows = getGameValues(in);
 
-        System.out.println("Write names of both players:");
-        GameEvaluation eval = new GameEvaluation(new SoccerGame(columns, rows, in.next(), in.next()));
+        System.out.println("Write a name of humanoid player:");
+        GameEvaluation eval = new GameEvaluation(new SoccerGame(columns, rows, in.next()), new NaiveOpponent());
 
         eval.play(in);
     }

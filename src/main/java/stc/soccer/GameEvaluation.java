@@ -68,7 +68,13 @@ public class GameEvaluation {
         System.out.println("Current location of ball is " + game.getCurrentPosition().toString() + ".");
     }
 
-    //TODO comment
+    /**
+     * Method for changing turn of both players based on the bounce mechanic.
+     *
+     * @param turn which represents which players turn it is
+     * @param point which bounce is checked in order to correctly change players
+     * @return boolean representation of next players turn
+     */
     private boolean changePlayers(boolean turn, FieldPoint point) {
         if (game.checkBounce(point)) {
             System.out.println("It's a bounce!!!");

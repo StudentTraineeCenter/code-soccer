@@ -7,6 +7,10 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * This naive artificial opponent is mainly used a test subject.
+ * It's moves are based on the Java Random class.
+ */
 public class NaiveOpponent implements ArtificialOpponent {
 
     private final Random rand;

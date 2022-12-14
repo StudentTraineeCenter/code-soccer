@@ -159,7 +159,7 @@ public class SoccerGame {
      * destination is detected, the same player is going to play. Otherwise, it's other
      * players turn.
      *
-     * @param point whose bounce should be checked.
+     * @param point which bounce should be checked.
      * @return true if move does bounce, otherwise false
      */
     public boolean checkBounce(FieldPoint point) {

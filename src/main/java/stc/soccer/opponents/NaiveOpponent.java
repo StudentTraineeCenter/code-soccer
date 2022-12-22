@@ -11,8 +11,9 @@ import java.util.Set;
  * This naive artificial opponent is mainly used a test subject.
  * It's moves are based on the Java Random class.
  */
-public class NaiveOpponent implements ArtificialOpponent {
+public class NaiveOpponent implements Opponent {
 
+    private static final OpponentType type = OpponentType.NAIVEAI;
     private final Random rand;
 
     public NaiveOpponent() {
@@ -39,5 +40,10 @@ public class NaiveOpponent implements ArtificialOpponent {
         return new FieldPoint(
                 currentPosition.column() + rand.nextInt(3) - 1,
                 currentPosition.row() + rand.nextInt(3) - 1);
+    }
+
+    @Override
+    public OpponentType getType() {
+        return type;
     }
 }

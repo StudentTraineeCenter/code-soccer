@@ -1,6 +1,6 @@
 package stc.soccer;
 
-import stc.soccer.opponents.ArtificialOpponent;
+import stc.soccer.opponents.Opponent;
 
 import java.util.Scanner;
 
@@ -8,27 +8,30 @@ public class GameEvaluation {
 
     private final SoccerGame game;
     private boolean turn;
-    private final ArtificialOpponent ai;
+    private final Opponent ai;
+    private final Opponent human;
 
-    public GameEvaluation(SoccerGame game, ArtificialOpponent ai) {
+    public GameEvaluation(SoccerGame game, Opponent ai, Opponent human) {
         this.game = game;
         this.turn = true;
         this.ai = ai;
+        this.human = human;
     }
 
     /**
      * Method used to start the game.
      *
      * @param in for using already pre-existing Scanner.
+     * @return winner of finished game
      */
-    public void play(Scanner in) {
+    public Opponent play(Scanner in) {
         while (true) {
             FieldPoint destination;
             turnOutput(turn);
 
             //TODO turn decision in method???
             if (turn) {
-                destination = new FieldPoint(in.nextInt(), in.nextInt());
+                destination = human.makeMove(game);
             } else {
                 destination = ai.makeMove(game);
                 System.out.println(destination);
@@ -37,7 +40,7 @@ public class GameEvaluation {
             while (!game.isMoveValid(destination)) {
                 System.out.println("Specified move is not valid. Try again.");
                 if (turn) {
-                    destination = new FieldPoint(in.nextInt(), in.nextInt());
+                    destination = human.makeMove(game);
                 } else {
                     destination = ai.makeMove(game);
                     System.out.println(destination);
@@ -45,7 +48,11 @@ public class GameEvaluation {
             }
 
             if (game.isPointInsideGoals(destination)) {
-                break;
+                if (game.getCurrentPosition().row() == 0) {
+                    return ai;
+                } else {
+                    return human;
+                }
             }
 
             turn = changePlayers(turn, destination);
@@ -60,7 +67,7 @@ public class GameEvaluation {
      */
     private void turnOutput(boolean turn) {
         if (turn) {
-            System.out.println("Players " + game.getPlayer1() + " turn:");
+            System.out.println("Players " + human.getType() + " turn:");
         } else {
             System.out.println("AIs turn:");
         }

@@ -1,6 +1,8 @@
 package stc.soccer;
 
+import stc.soccer.opponents.HumanOpponent;
 import stc.soccer.opponents.NaiveOpponent;
+import stc.soccer.opponents.Opponent;
 
 import java.util.Scanner;
 
@@ -13,7 +15,7 @@ public class GameSetup {
     /**
      * Utility method to set up and start a new Code Soccer game.
      */
-    public static void setupGame() {
+    public static Opponent setupGame() {
         Scanner in = new Scanner(System.in);
         int columns;
         int rows;
@@ -26,10 +28,9 @@ public class GameSetup {
         System.out.println("What is the number of rows?");
         rows = getGameValues(in);
 
-        System.out.println("Write a name of humanoid player:");
-        GameEvaluation eval = new GameEvaluation(new SoccerGame(columns, rows, in.next()), new NaiveOpponent());
+        GameEvaluation eval = new GameEvaluation(new SoccerGame(columns, rows), new NaiveOpponent(), new HumanOpponent("Woodz", in));
 
-        eval.play(in);
+        return eval.play(in);
     }
 
     /**

@@ -7,14 +7,12 @@ public class SoccerGame {
     private final int rows;
     private FieldPoint currentPosition;
     private Map<FieldPoint, List<FieldPoint>> moveHistory;
-    private final String player1;
 
-    public SoccerGame(int columns, int rows, String name1) {
+    public SoccerGame(int columns, int rows) {
         this.columns = columns;
         this.rows = rows;
         this.currentPosition = new FieldPoint(columns/2, rows/2);
         this.moveHistory = new HashMap<>();
-        this.player1 = name1;
     }
 
     public int getColumns() {
@@ -33,9 +31,6 @@ public class SoccerGame {
         return currentPosition;
     }
 
-    public String getPlayer1() {
-        return player1;
-    }
 
     /**
      * Method for adding a new move in both directions.
@@ -76,7 +71,7 @@ public class SoccerGame {
     public boolean isMoveValid(FieldPoint dest) {
         return (isPointInsideBounds(dest) && isMoveMade(dest) &&
                 isPointCloseEnough(dest) && !isMoveInHistory(dest) &&
-                !(isPointOnBounds(this.getCurrentPosition()) && isPointOnBounds(dest))) ||
+                !(isPointOnBounds(currentPosition) && isPointOnBounds(dest))) ||
                 isPointInsideGoals(dest);
     }
 
@@ -87,8 +82,8 @@ public class SoccerGame {
      * @return true if point is inside of bounds, otherwise false.
      */
     public boolean isPointInsideBounds(FieldPoint point) {
-        return ((point.row() >= 0) && (point.row() < this.getRows())) &&
-                ((point.column() >= 0) && (point.column() < this.getColumns()));
+        return ((point.row() >= 0) && (point.row() < rows)) &&
+                ((point.column() >= 0) && (point.column() < columns));
     }
 
     /**
@@ -98,7 +93,7 @@ public class SoccerGame {
      * @return true if point is close enough, otherwise false.
      */
     public boolean isPointCloseEnough(FieldPoint point) {
-        final FieldPoint position = this.getCurrentPosition();
+        final FieldPoint position = currentPosition;
 
         return ((position.row() - point.row()) > -2 && (position.row() - point.row()) < 2) &&
                 ((position.column() - point.column()) > -2 && (position.column() - point.column()) < 2);
@@ -111,7 +106,7 @@ public class SoccerGame {
      * @return true if a move was made, otherwise false.
      */
     public boolean isMoveMade(FieldPoint point) {
-        return (this.getCurrentPosition().row() != point.row() || this.getCurrentPosition().column() != point.column());
+        return (currentPosition.row() != point.row() || currentPosition.column() != point.column());
     }
 
     /**
@@ -122,8 +117,8 @@ public class SoccerGame {
      */
     public boolean isPointInsideGoals(FieldPoint point) {
         return isPointCloseEnough(point) &&
-                (Math.abs(point.column() - this.getColumns() / 2) < 2) &&
-                (point.row() == -1 || point.row() == this.getRows());
+                (Math.abs(point.column() - columns / 2) < 2) &&
+                (point.row() == -1 || point.row() == rows);
     }
 
     /**
@@ -138,11 +133,11 @@ public class SoccerGame {
      */
     public boolean isMoveInHistory(FieldPoint point) {
         if (this.getMoveHistory().containsKey(point)) {
-            final List<FieldPoint> pointHist = this.getMoveHistory().get(point);
+            final List<FieldPoint> pointHist = moveHistory.get(point);
 
             if (!pointHist.isEmpty()) {
                 for (FieldPoint pt: pointHist) {
-                    if (pt.equals(this.getCurrentPosition())) {
+                    if (pt.equals(currentPosition)) {
                         return true;
                     }
                 }
@@ -176,12 +171,12 @@ public class SoccerGame {
      * @return true if passed point is placed on bounds of a field, otherwise false.
      */
     public boolean isPointOnBounds(FieldPoint point) {
-        return ((point.row() == 0 || point.row() == this.getRows() - 1) ||
-                (point.column() == 0 || point.column() == this.getColumns() - 1)) &&
-                (point.column() != this.getColumns() / 2);
+        return ((point.row() == 0 || point.row() == rows - 1) ||
+                (point.column() == 0 || point.column() == columns - 1)) &&
+                (point.column() != columns / 2);
     }
 
-    /** TODO
+    /** TODO asi predpripravit vsechen grid u hry, pak by mi to mohlo pomoct i u path findingu
      * Method for checking possibility of a move from current position.
      * <p>
      * This method checks whether a move is possible from current ball position.
@@ -191,10 +186,10 @@ public class SoccerGame {
      * @return true if any move is possible, otherwise false
      */
     public boolean checkMovePossibility() {
-        if (isPointOnBounds(this.getCurrentPosition())) {
+        if (isPointOnBounds(currentPosition)) {
             return true;
         } else {
-            return this.getMoveHistory().get(this.getCurrentPosition()).size() == 8;
+            return this.getMoveHistory().get(currentPosition).size() == 8;
         }
     }
 

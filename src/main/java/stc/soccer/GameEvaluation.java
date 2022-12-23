@@ -8,14 +8,14 @@ public class GameEvaluation {
 
     private final SoccerGame game;
     private boolean turn;
-    private final Opponent opponent1;
-    private final Opponent opponent2;
+    private final Opponent opponentTop;
+    private final Opponent opponentBottom;
 
-    public GameEvaluation(SoccerGame game, Opponent opponent1, Opponent opponent2) {
+    public GameEvaluation(SoccerGame game, Opponent opponentTop, Opponent opponentBottom) {
         this.game = game;
         this.turn = true;
-        this.opponent1 = opponent1;
-        this.opponent2 = opponent2;
+        this.opponentTop = opponentTop;
+        this.opponentBottom = opponentBottom;
     }
 
     /**
@@ -32,37 +32,38 @@ public class GameEvaluation {
             //TODO turn decision in method???
             //TODO goal decision
             if (turn) {
-                destination = opponent1.makeMove(game);
+                destination = opponentTop.makeMove(game);
             } else {
-                destination = opponent2.makeMove(game);
+                destination = opponentBottom.makeMove(game);
             }
 
             while (!game.isMoveValid(destination)) {
                 System.out.println("Specified move is not valid. Try again.");
                 if (turn) {
-                    destination = opponent1.makeMove(game);
+                    destination = opponentTop.makeMove(game);
                 } else {
-                    destination = opponent2.makeMove(game);
+                    destination = opponentBottom.makeMove(game);
                 }
             }
 
             System.out.println(destination);
+            //TODO now it checks the goal locations too so fix this shiit pls
             turn = changePlayers(turn, destination); //TODO fuse end game with change players and add move
             game.addMove(destination);
 
             if (game.isPointInsideGoals(destination)) {
-                if (game.getCurrentPosition().row() == 0) {
-                    return opponent2;
+                if (game.getCurrentPosition().row() == -1) {
+                    return opponentTop;
                 } else {
-                    return opponent1;
+                    return opponentBottom;
                 }
             }
 
             if (!game.isMovePossible()) {
                 if (turn) {
-                    return opponent2;
+                    return opponentBottom;
                 } else {
-                    return opponent1;
+                    return opponentTop;
                 }
             }
 
@@ -76,9 +77,9 @@ public class GameEvaluation {
      */
     private void turnOutput(boolean turn) {
         if (turn) {
-            System.out.println("Players " + opponent1.getType() + " turn:");
+            System.out.println("Players " + opponentTop.getName() + " turn:");
         } else {
-            System.out.println("AIs turn:");
+            System.out.println("Players " + opponentBottom.getName() + " turn:");
         }
 
         System.out.println("Current location of ball is " + game.getCurrentPosition().toString() + ".");

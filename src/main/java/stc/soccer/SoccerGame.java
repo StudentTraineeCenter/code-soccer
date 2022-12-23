@@ -13,6 +13,11 @@ public class SoccerGame {
         this.rows = rows;
         this.currentPosition = new FieldPoint(columns/2, rows/2);
         this.moveHistory = new HashMap<>();
+        for (int i = 0; i < columns; ++i) {
+            for (int j = 0; j < rows; ++j) {
+                moveHistory.put(new FieldPoint(i, j), List.of());
+            }
+        }
     }
 
     public int getColumns() {
@@ -158,7 +163,7 @@ public class SoccerGame {
      * @return true if move does bounce, otherwise false
      */
     public boolean checkBounce(FieldPoint point) {
-        return this.getMoveHistory().containsKey(point) || isPointOnBounds(point);
+        return !moveHistory.get(point).isEmpty() || isPointOnBounds(point);
     }
 
     /**

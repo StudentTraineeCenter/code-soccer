@@ -16,4 +16,6 @@ public interface Opponent {
 
     OpponentType getType();
 
+    String getName();
+
 }

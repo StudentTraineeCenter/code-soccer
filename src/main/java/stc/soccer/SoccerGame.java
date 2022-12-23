@@ -207,7 +207,7 @@ public class SoccerGame {
                 (point.column() != columns / 2);
     }
 
-    /** TODO asi predpripravit vsechen grid u hry, pak by mi to mohlo pomoct i u path findingu
+    /**
      * Method for checking possibility of a move from current position.
      * <p>
      * This method checks whether a move is possible from current ball position.
@@ -216,12 +216,20 @@ public class SoccerGame {
      *
      * @return true if any move is possible, otherwise false
      */
-    public boolean checkMovePossibility() {
-        if (isPointOnBounds(currentPosition)) {
-            return true;
-        } else {
-            return this.getMoveHistory().get(currentPosition).size() == 8;
-        }
+    public boolean isMovePossible() {
+        final boolean rowBoundary = isPointOnRowBounds(currentPosition);
+        final boolean columnBoundary = isPointOnColumnBounds(currentPosition);
+
+        if (rowBoundary && columnBoundary) {
+            return false;
+        } else if (rowBoundary || columnBoundary) {
+            if (currentPosition.column() == (columns / 2) - 1 ||
+                currentPosition.column() == (columns / 2) + 1) {
+                    return moveHistory.get(currentPosition).size() != 5;
+            } else {
+                return moveHistory.get(currentPosition).size() != 3;
+            }
+        } else return moveHistory.get(currentPosition).size() != 8;
     }
 
 }

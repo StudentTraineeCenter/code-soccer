@@ -13,4 +13,14 @@ public class ShortestPathOpponent implements Opponent {
     public OpponentType getType() {
         return null;
     }
+
+    @Override
+    public String getName() {
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return null;
+    }
 }

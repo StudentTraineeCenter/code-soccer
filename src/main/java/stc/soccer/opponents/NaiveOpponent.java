@@ -14,9 +14,11 @@ import java.util.Set;
 public class NaiveOpponent implements Opponent {
 
     private static final OpponentType type = OpponentType.NAIVEAI;
+    private final String name;
     private final Random rand;
 
-    public NaiveOpponent() {
+    public NaiveOpponent(String name) {
+        this.name = name;
         rand = new Random();
     }
 
@@ -45,5 +47,18 @@ public class NaiveOpponent implements Opponent {
     @Override
     public OpponentType getType() {
         return type;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return "NaiveOpponent{" +
+                "name='" + name + '\'' +
+                ", rand=" + rand +
+                '}';
     }
 }

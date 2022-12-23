@@ -1,6 +1,5 @@
 package stc.soccer;
 
-import stc.soccer.opponents.HumanOpponent;
 import stc.soccer.opponents.NaiveOpponent;
 import stc.soccer.opponents.Opponent;
 
@@ -28,9 +27,10 @@ public class GameSetup {
         System.out.println("What is the number of rows?");
         rows = getGameValues(in);
 
-        GameEvaluation eval = new GameEvaluation(new SoccerGame(columns, rows), new NaiveOpponent(), new HumanOpponent("Woodz", in));
+        GameEvaluation eval = new GameEvaluation(new SoccerGame(columns, rows), new NaiveOpponent("Naive1T"), new NaiveOpponent("Naive2B"));
+//        GameEvaluation eval = new GameEvaluation(new SoccerGame(columns, rows), new NaiveOpponent(), new HumanOpponent("Woodz", in));
 
-        return eval.play(in);
+        return eval.play(in);//TODO probably setup playing field so we can search in it
     }
 
     /**

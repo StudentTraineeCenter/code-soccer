@@ -8,14 +8,14 @@ public class GameEvaluation {
 
     private final SoccerGame game;
     private boolean turn;
-    private final Opponent ai;
-    private final Opponent human;
+    private final Opponent opponent1;
+    private final Opponent opponent2;
 
-    public GameEvaluation(SoccerGame game, Opponent ai, Opponent human) {
+    public GameEvaluation(SoccerGame game, Opponent opponent1, Opponent opponent2) {
         this.game = game;
         this.turn = true;
-        this.ai = ai;
-        this.human = human;
+        this.opponent1 = opponent1;
+        this.opponent2 = opponent2;
     }
 
     /**
@@ -30,33 +30,42 @@ public class GameEvaluation {
             turnOutput(turn);
 
             //TODO turn decision in method???
+            //TODO goal decision
             if (turn) {
-                destination = human.makeMove(game);
+                destination = opponent1.makeMove(game);
             } else {
-                destination = ai.makeMove(game);
-                System.out.println(destination);
+                destination = opponent2.makeMove(game);
             }
 
             while (!game.isMoveValid(destination)) {
                 System.out.println("Specified move is not valid. Try again.");
                 if (turn) {
-                    destination = human.makeMove(game);
+                    destination = opponent1.makeMove(game);
                 } else {
-                    destination = ai.makeMove(game);
-                    System.out.println(destination);
+                    destination = opponent2.makeMove(game);
                 }
             }
+
+            System.out.println(destination);
+            turn = changePlayers(turn, destination); //TODO fuse end game with change players and add move
+            game.addMove(destination);
 
             if (game.isPointInsideGoals(destination)) {
                 if (game.getCurrentPosition().row() == 0) {
-                    return ai;
+                    return opponent2;
                 } else {
-                    return human;
+                    return opponent1;
                 }
             }
 
-            turn = changePlayers(turn, destination);
-            game.addMove(destination);
+            if (!game.isMovePossible()) {
+                if (turn) {
+                    return opponent2;
+                } else {
+                    return opponent1;
+                }
+            }
+
         }
     }
 
@@ -67,7 +76,7 @@ public class GameEvaluation {
      */
     private void turnOutput(boolean turn) {
         if (turn) {
-            System.out.println("Players " + human.getType() + " turn:");
+            System.out.println("Players " + opponent1.getType() + " turn:");
         } else {
             System.out.println("AIs turn:");
         }

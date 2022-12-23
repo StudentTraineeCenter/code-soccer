@@ -71,7 +71,7 @@ public class SoccerGame {
     public boolean isMoveValid(FieldPoint dest) {
         return (isPointInsideBounds(dest) && isMoveMade(dest) &&
                 isPointCloseEnough(dest) && !isMoveInHistory(dest) &&
-                !(isPointOnBounds(currentPosition) && isPointOnBounds(dest))) ||
+                !(isMoveOnSameBounds(currentPosition, dest))) ||
                 isPointInsideGoals(dest);
     }
 
@@ -171,8 +171,39 @@ public class SoccerGame {
      * @return true if passed point is placed on bounds of a field, otherwise false.
      */
     public boolean isPointOnBounds(FieldPoint point) {
-        return ((point.row() == 0 || point.row() == rows - 1) ||
-                (point.column() == 0 || point.column() == columns - 1)) &&
+        return isPointOnColumnBounds(point) || isPointOnRowBounds(point);
+    }
+
+    /**
+     * Method that checks whether specified move is on a same boundary.
+     *
+     * @param from point where move starts.
+     * @param to point where move ends.
+     * @return true if move is on a same boundary, otherwise false.
+     */
+    public boolean isMoveOnSameBounds(FieldPoint from, FieldPoint to) {
+        return (isPointOnRowBounds(from) && isPointOnRowBounds(to)) ||
+                (isPointOnColumnBounds(from) && isPointOnColumnBounds(to));
+    }
+
+    /**
+     * Method that checks whether specified point is on a column boundary.
+     *
+     * @param point whose location should be checked.
+     * @return true if point is on a column boundary, otherwise false.
+     */
+    public boolean isPointOnColumnBounds(FieldPoint point) {
+        return point.column() == 0 || point.column() == columns - 1;
+    }
+
+    /**
+     * Method that checks whether specified point is on a row boundary.
+     *
+     * @param point whose location should be checked.
+     * @return true if point is on a row boundary, otherwise false.
+     */
+    public boolean isPointOnRowBounds(FieldPoint point) {
+        return (point.row() == 0 || point.row() == rows - 1) &&
                 (point.column() != columns / 2);
     }
 

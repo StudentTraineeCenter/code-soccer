@@ -74,10 +74,17 @@ public class SoccerGame {
      * @return true if desired move is valid, otherwise false.
      */
     public boolean isMoveValid(FieldPoint dest) {
+//        boolean inside = isPointInsideBounds(dest);
+//        boolean move = isMoveMade(dest);
+//        boolean close = isPointCloseEnough(dest);
+//        boolean hist = !isMoveInHistory(dest);
+//        boolean same = !(isMoveOnSameBounds(currentPosition, dest));
+//        boolean goals = isPointInsideGoalsAndCloseEnough(dest);
+
         return (isPointInsideBounds(dest) && isMoveMade(dest) &&
                 isPointCloseEnough(dest) && !isMoveInHistory(dest) &&
                 !(isMoveOnSameBounds(currentPosition, dest))) ||
-                isPointInsideGoals(dest);
+                isPointInsideGoalsAndCloseEnough(dest);
     }
 
     /**
@@ -120,10 +127,12 @@ public class SoccerGame {
      * @param point whose location should be checked.
      * @return true if point is located inside a goal, otherwise false.
      */
-    public boolean isPointInsideGoals(FieldPoint point) {
+    public boolean isPointInsideGoalsAndCloseEnough(FieldPoint point) {
         return isPointCloseEnough(point) &&
                 (Math.abs(point.column() - columns / 2) < 2) &&
-                (point.row() == -1 || point.row() == rows);
+                (point.row() == -1 || point.row() == rows) &&
+                (currentPosition.column() >= (columns/2) - 1 &&
+                        currentPosition.column() <= (columns/2) - 1);
     }
 
     /**

@@ -46,12 +46,11 @@ public class GameEvaluation {
                 }
             }
 
-            System.out.println(destination);
-            //TODO now it checks the goal locations too so fix this shiit pls
+            System.out.println(destination);// TODO don't check goal locations
             turn = changePlayers(turn, destination); //TODO fuse end game with change players and add move
             game.addMove(destination);
 
-            if (game.isPointInsideGoals(destination)) {
+            if (game.isPointInsideGoalsAndCloseEnough(destination)) {
                 if (game.getCurrentPosition().row() == -1) {
                     return opponentTop;
                 } else {

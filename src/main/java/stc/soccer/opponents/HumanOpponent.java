@@ -22,19 +22,36 @@ public class HumanOpponent implements Opponent {
         this.goalLocation = goalLocation;
     }
 
+    /**
+     * Method used for receiving of a move from human from console.
+     * @param game of current game.
+     * @return destination point.
+     */
     @Override
     public FieldPoint makeMove(SoccerGame game) {
         return new FieldPoint(in.nextInt(), in.nextInt());
     }
 
+    /**
+     * Getter for value of OpponentType.
+     * @return type of OpponentType.
+     */
     public OpponentType getType() {
         return type;
     }
 
+    /**
+     * Getter for name of opponent.
+     * @return String name of opponent.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Getter for value of GoalLocation.
+     * @return type of GoalLocationType.
+     */
     @Override
     public GoalLocationType getGoalLocation() {
         return goalLocation;

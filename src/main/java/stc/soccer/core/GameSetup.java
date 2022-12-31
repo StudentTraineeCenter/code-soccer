@@ -21,7 +21,9 @@ public class GameSetup {
     public static Opponent setupGame() {
         System.out.println("------------- Welcome to Code Soccer -------------");
 
-        GameEvaluation eval = new GameEvaluation(new SoccerGame(COLUMNS, ROWS), new NaiveOpponent("Naive1T", GoalLocationType.TOP), new NaiveOpponent("Naive2B", GoalLocationType.BOTTOM));
+        GameEvaluation eval = new GameEvaluation(new SoccerGame(COLUMNS, ROWS),
+                new NaiveOpponent("Naive1T", GoalLocationType.TOP),
+                new NaiveOpponent("Naive2B", GoalLocationType.BOTTOM));
 
         return eval.play();
     }

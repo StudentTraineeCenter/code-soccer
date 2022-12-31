@@ -16,21 +16,26 @@ public class SoccerGame {
     /**
      * Constructor for a template of a game of Code Soccer.
      * <p>
-     * This constructor initializes the game. Sets the number of rows andcolumns necessary, prepares starting position and
+     * This constructor initializes the game. Sets the number of rows and columns necessary, prepares starting position and
      * prepares moveHistory.
      * @param columns which defines number of columns of a game field.
      * @param rows which defines number of rows of a game field.
      */
     public SoccerGame(int columns, int rows) {
-        this.columns = columns;
-        this.rows = rows;
-        this.currentPosition = new FieldPoint(columns/2, rows/2);
-        this.moveHistory = new HashMap<>();
-        for (int i = 0; i < columns; ++i) {
-            for (int j = 0; j < rows; ++j) {
-                moveHistory.put(new FieldPoint(i, j), List.of());
+        if ((columns % 2 == 1 || columns > 4) && (rows % 2 == 1 || rows > 4)) {
+            this.columns = columns;
+            this.rows = rows;
+            this.currentPosition = new FieldPoint(columns/2, rows/2);
+            this.moveHistory = new HashMap<>();
+            for (int i = 0; i < columns; ++i) {
+                for (int j = 0; j < rows; ++j) {
+                    moveHistory.put(new FieldPoint(i, j), List.of());
+                }
             }
+        } else {
+            throw new IllegalStateException("Rows and columns have to be even and greater than 4.");
         }
+
     }
 
     public Map<FieldPoint, List<FieldPoint>> getMoveHistory() {

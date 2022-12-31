@@ -1,6 +1,7 @@
 package stc.soccer.core;
 
-import stc.soccer.opponents.GoalLocationType;
+import stc.soccer.core.utils.FieldPoint;
+import stc.soccer.opponents.types.GoalLocationType;
 import stc.soccer.opponents.Opponent;
 
 

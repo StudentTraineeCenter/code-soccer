@@ -1,4 +1,4 @@
-package stc.soccer.opponents;
+package stc.soccer.opponents.types;
 
 /**
  * This enum represents type of opponent.

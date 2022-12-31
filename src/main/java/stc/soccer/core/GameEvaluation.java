@@ -20,9 +20,9 @@ public class GameEvaluation {
      * <p>
      * It has only one restriction and that is that it needs two opponents of different GaolLocationType. If this
      * restriction isn't fulfilled, an IllegalStateException is thrown.
-     * @param game
-     * @param opponentTop
-     * @param opponentBottom
+     * @param game template that evaluation system has to follow.
+     * @param opponentTop player whose goal is located on top of the field.
+     * @param opponentBottom player whose goal is located on bottom of the field.
      */
     public GameEvaluation(SoccerGame game, Opponent opponentTop, Opponent opponentBottom) {
         if (opponentTop.getGoalLocation() == GoalLocationType.TOP &&
@@ -73,7 +73,6 @@ public class GameEvaluation {
             } else if (gameFinished == -1) {
                 return opponentBottom;
             }
-
         }
     }
 
@@ -100,9 +99,7 @@ public class GameEvaluation {
      * @return boolean representation of next players turn
      */
     private boolean changePlayers(boolean turn, FieldPoint point) {
-        if (game.checkBounce(point)) {
-            System.out.println("It's a bounce!!!");
-        } else {
+        if (!game.checkBounce(point)) {
             turn = !turn;
         }
 

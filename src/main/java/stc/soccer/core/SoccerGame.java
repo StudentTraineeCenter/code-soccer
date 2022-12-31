@@ -2,12 +2,23 @@ package stc.soccer.core;
 
 import java.util.*;
 
+/**
+ * Class that defines the template of a game of Code Soccer.
+ */
 public class SoccerGame {
     private final int columns;
     private final int rows;
     private FieldPoint currentPosition;
     private Map<FieldPoint, List<FieldPoint>> moveHistory;
 
+    /**
+     * Constructor for a template of a game of Code Soccer.
+     * <p>
+     * This constructor initializes the game. Sets the number of rows andcolumns necessary, prepares starting position and
+     * prepares moveHistory.
+     * @param columns which defines number of columns of a game field.
+     * @param rows which defines number of rows of a game field.
+     */
     public SoccerGame(int columns, int rows) {
         this.columns = columns;
         this.rows = rows;
@@ -20,14 +31,6 @@ public class SoccerGame {
         }
     }
 
-    public int getColumns() {
-        return columns;
-    }
-
-    public int getRows() {
-        return rows;
-    }
-
     public Map<FieldPoint, List<FieldPoint>> getMoveHistory() {
         return moveHistory;
     }
@@ -35,7 +38,6 @@ public class SoccerGame {
     public FieldPoint getCurrentPosition() {
         return currentPosition;
     }
-
 
     /**
      * Method for adding a new move in both directions.
@@ -165,7 +167,11 @@ public class SoccerGame {
      * @return true if move does bounce, otherwise false
      */
     public boolean checkBounce(FieldPoint point) {
-        return !moveHistory.get(point).isEmpty() || isPointOnBounds(point);
+        if (moveHistory.containsKey(point)) {
+            return !moveHistory.get(point).isEmpty() || isPointOnBounds(point);
+        } else {
+            return true;
+        }
     }
 
     /**

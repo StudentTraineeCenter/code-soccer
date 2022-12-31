@@ -1,7 +1,9 @@
 package stc.soccer.opponents;
 
-import stc.soccer.core.FieldPoint;
+import stc.soccer.core.utils.FieldPoint;
 import stc.soccer.core.SoccerGame;
+import stc.soccer.opponents.types.GoalLocationType;
+import stc.soccer.opponents.types.OpponentType;
 
 import java.util.HashSet;
 import java.util.Random;

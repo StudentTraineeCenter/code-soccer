@@ -1,4 +1,4 @@
-package stc.soccer.core;
+package stc.soccer.core.utils;
 
 /**
  * This record represents a point in a field as an object.

@@ -1,5 +1,7 @@
 package stc.soccer.core;
 
+import stc.soccer.core.utils.FieldPoint;
+
 import java.util.*;
 
 /**

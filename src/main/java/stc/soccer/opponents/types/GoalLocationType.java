@@ -1,4 +1,4 @@
-package stc.soccer.opponents;
+package stc.soccer.opponents.types;
 
 /**
  * This enum represents location of a goal for a player.

@@ -1,4 +1,4 @@
-package stc.soccer;
+package stc.soccer.core;
 
 import java.util.*;
 

@@ -1,12 +1,14 @@
-package stc.soccer;
+package stc.soccer.core;
 
-import stc.soccer.opponents.HumanOpponent;
+import stc.soccer.opponents.GoalLocationType;
 import stc.soccer.opponents.NaiveOpponent;
 import stc.soccer.opponents.Opponent;
 
 import java.util.Scanner;
 
 public class GameSetup {
+    private static final int COLUMNS = 9;
+    private static final int ROWS = 11;
 
     private GameSetup() {
         throw new IllegalStateException("Utility class");
@@ -17,19 +19,11 @@ public class GameSetup {
      */
     public static Opponent setupGame() {
         Scanner in = new Scanner(System.in);
-        int columns;
-        int rows;
-
         System.out.println("------------- Welcome to Code Soccer -------------");
 
-        System.out.println("What is the number of columns?");
-        columns = getGameValues(in);
-
-        System.out.println("What is the number of rows?");
-        rows = getGameValues(in);
-
-//        GameEvaluation eval = new GameEvaluation(new SoccerGame(columns, rows), new NaiveOpponent("Naive1T"), new NaiveOpponent("Naive2B"));
-        GameEvaluation eval = new GameEvaluation(new SoccerGame(columns, rows), new NaiveOpponent("Naive1T"), new HumanOpponent("Woodz", in));
+        //TODO give programmers chance to just send an empty opponent
+        GameEvaluation eval = new GameEvaluation(new SoccerGame(COLUMNS, ROWS), new NaiveOpponent("Naive1T", GoalLocationType.TOP), new NaiveOpponent("Naive2B", GoalLocationType.BOTTOM));
+//        GameEvaluation eval = new GameEvaluation(new SoccerGame(COLUMNS, ROWS), new NaiveOpponent("Naive1T", GoalLocationType.TOP), new HumanOpponent("Woodz", in, GoalLocationType.BOTTOM));
 
         return eval.play(in);//TODO probably setup playing field so we can search in it
     }

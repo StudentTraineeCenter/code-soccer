@@ -1,5 +1,6 @@
-package stc.soccer;
+package stc.soccer.core;
 
+import stc.soccer.opponents.GoalLocationType;
 import stc.soccer.opponents.Opponent;
 
 import java.util.Scanner;
@@ -12,10 +13,16 @@ public class GameEvaluation {
     private final Opponent opponentBottom;
 
     public GameEvaluation(SoccerGame game, Opponent opponentTop, Opponent opponentBottom) {
-        this.game = game;
-        this.turn = true;
-        this.opponentTop = opponentTop;
-        this.opponentBottom = opponentBottom;
+        if (opponentTop.getGoalLocation() == GoalLocationType.TOP &&
+                opponentBottom.getGoalLocation() == GoalLocationType.BOTTOM) {
+            this.game = game;
+            this.turn = true;
+            this.opponentTop = opponentTop;
+            this.opponentBottom = opponentBottom;
+        } else {
+            throw new IllegalStateException("Opponents passed to GameEvaluation do not have correct goal locations:\n" +
+                    "TOP> " + opponentTop.toString() + "\nBOTTOM> " + opponentBottom.toString());
+        }
     }
 
     /**

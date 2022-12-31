@@ -1,18 +1,21 @@
 package stc.soccer.opponents;
 
-import stc.soccer.FieldPoint;
-import stc.soccer.SoccerGame;
+import stc.soccer.core.FieldPoint;
+import stc.soccer.core.SoccerGame;
 
 import java.util.Scanner;
 
 public class HumanOpponent implements Opponent {
+
     private static final OpponentType type = OpponentType.HUMAN;
+    private final GoalLocationType goalLocation;
     private final Scanner in;
     private final String name;
 
-    public HumanOpponent(String name, Scanner in) {
+    public HumanOpponent(String name, Scanner in, GoalLocationType goalLocation) {
         this.name = name;
         this.in = in;
+        this.goalLocation = goalLocation;
     }
 
     @Override
@@ -26,5 +29,18 @@ public class HumanOpponent implements Opponent {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public GoalLocationType getGoalLocation() {
+        return goalLocation;
+    }
+
+    @Override
+    public String toString() {
+        return "HumanOpponent{" +
+                "goalLocation=" + goalLocation +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

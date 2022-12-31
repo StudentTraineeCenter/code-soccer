@@ -1,4 +1,4 @@
-package stc.soccer;
+package stc.soccer.core;
 
 public record FieldPoint(int column, int row) {
 

@@ -1,7 +1,7 @@
 package stc.soccer.opponents;
 
-import stc.soccer.FieldPoint;
-import stc.soccer.SoccerGame;
+import stc.soccer.core.FieldPoint;
+import stc.soccer.core.SoccerGame;
 
 //TODO comments
 
@@ -17,5 +17,7 @@ public interface Opponent {
     OpponentType getType();
 
     String getName();
+
+    GoalLocationType getGoalLocation();
 
 }

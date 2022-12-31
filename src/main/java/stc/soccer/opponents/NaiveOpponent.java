@@ -1,7 +1,7 @@
 package stc.soccer.opponents;
 
-import stc.soccer.FieldPoint;
-import stc.soccer.SoccerGame;
+import stc.soccer.core.FieldPoint;
+import stc.soccer.core.SoccerGame;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -14,11 +14,13 @@ import java.util.Set;
 public class NaiveOpponent implements Opponent {
 
     private static final OpponentType type = OpponentType.NAIVEAI;
+    private final GoalLocationType goalLocation;
     private final String name;
     private final Random rand;
 
-    public NaiveOpponent(String name) {
+    public NaiveOpponent(String name, GoalLocationType goalLocation) {
         this.name = name;
+        this.goalLocation = goalLocation;
         rand = new Random();
     }
 
@@ -55,10 +57,15 @@ public class NaiveOpponent implements Opponent {
     }
 
     @Override
+    public GoalLocationType getGoalLocation() {
+        return goalLocation;
+    }
+
+    @Override
     public String toString() {
         return "NaiveOpponent{" +
-                "name='" + name + '\'' +
-                ", rand=" + rand +
+                "goalLocation=" + goalLocation +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

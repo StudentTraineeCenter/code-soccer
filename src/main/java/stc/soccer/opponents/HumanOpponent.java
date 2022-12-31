@@ -5,6 +5,10 @@ import stc.soccer.core.SoccerGame;
 
 import java.util.Scanner;
 
+
+/**
+ * This opponent is used as a form of human input. It can be used to try the game on your own.
+ */
 public class HumanOpponent implements Opponent {
 
     private static final OpponentType type = OpponentType.HUMAN;
@@ -12,9 +16,9 @@ public class HumanOpponent implements Opponent {
     private final Scanner in;
     private final String name;
 
-    public HumanOpponent(String name, Scanner in, GoalLocationType goalLocation) {
+    public HumanOpponent(String name, GoalLocationType goalLocation) {
         this.name = name;
-        this.in = in;
+        this.in = new Scanner(System.in);
         this.goalLocation = goalLocation;
     }
 

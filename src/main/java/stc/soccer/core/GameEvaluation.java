@@ -3,8 +3,10 @@ package stc.soccer.core;
 import stc.soccer.opponents.GoalLocationType;
 import stc.soccer.opponents.Opponent;
 
-import java.util.Scanner;
 
+/**
+ * This method is an evaluation system that controls the whole game of Code Soccer.
+ */
 public class GameEvaluation {
 
     private final SoccerGame game;
@@ -12,6 +14,16 @@ public class GameEvaluation {
     private final Opponent opponentTop;
     private final Opponent opponentBottom;
 
+
+    /**
+     * This constructor is used for initialization of an evaluation system for code soccer.
+     * <p>
+     * It has only one restriction and that is that it needs two opponents of different GaolLocationType. If this
+     * restriction isn't fulfilled, an IllegalStateException is thrown.
+     * @param game
+     * @param opponentTop
+     * @param opponentBottom
+     */
     public GameEvaluation(SoccerGame game, Opponent opponentTop, Opponent opponentBottom) {
         if (opponentTop.getGoalLocation() == GoalLocationType.TOP &&
                 opponentBottom.getGoalLocation() == GoalLocationType.BOTTOM) {
@@ -21,23 +33,20 @@ public class GameEvaluation {
             this.opponentBottom = opponentBottom;
         } else {
             throw new IllegalStateException("Opponents passed to GameEvaluation do not have correct goal locations:\n" +
-                    "TOP> " + opponentTop.toString() + "\nBOTTOM> " + opponentBottom.toString());
+                    "TOP> " + opponentTop + "\nBOTTOM> " + opponentBottom);
         }
     }
 
     /**
      * Method used to start the game.
      *
-     * @param in for using already pre-existing Scanner.
      * @return winner of finished game
      */
-    public Opponent play(Scanner in) {
+    public Opponent play() {
         while (true) {
             FieldPoint destination;
             turnOutput(turn);
 
-            //TODO turn decision in method???
-            //TODO goal decision
             if (turn) {
                 destination = opponentTop.makeMove(game);
             } else {
@@ -53,24 +62,16 @@ public class GameEvaluation {
                 }
             }
 
-            System.out.println(destination);// TODO don't check goal locations
-            turn = changePlayers(turn, destination); //TODO fuse end game with change players and add move
+            System.out.println(destination);
+            turn = changePlayers(turn, destination);
             game.addMove(destination);
 
-            if (game.isPointInsideGoalsAndCloseEnough(destination)) {
-                if (game.getCurrentPosition().row() == -1) {
-                    return opponentTop;
-                } else {
-                    return opponentBottom;
-                }
-            }
+            final int gameFinished = isGameFinished(turn, game.getCurrentPosition());
 
-            if (!game.isMovePossible()) {
-                if (turn) {
-                    return opponentBottom;
-                } else {
-                    return opponentTop;
-                }
+            if (gameFinished == 1) {
+                return opponentTop;
+            } else if (gameFinished == -1) {
+                return opponentBottom;
             }
 
         }
@@ -106,5 +107,32 @@ public class GameEvaluation {
         }
 
         return turn;
+    }
+
+    /**
+     * Method that checks whether a game has fulfilled requirements for an end.
+     *
+     * @param turn that represents whose turn it is.
+     * @param destination of a ball.
+     * @return 1 if top player won, -1 if bottom player won, otherwise 0.
+     */
+    private int isGameFinished(boolean turn, FieldPoint destination) {
+        if (game.isPointInsideGoalsAndCloseEnough(destination)) {
+            if (game.getCurrentPosition().row() == -1) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+
+        if (!game.isMovePossible()) {
+            if (turn) {
+                return -1;
+            } else {
+                return 1;
+            }
+        }
+
+        return 0;
     }
 }

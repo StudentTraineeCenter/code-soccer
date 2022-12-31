@@ -6,6 +6,9 @@ import stc.soccer.opponents.Opponent;
 
 import java.util.Scanner;
 
+/**
+ * This is a utility class called in Main class to set up and start a game of Code Soccer.
+ */
 public class GameSetup {
     private static final int COLUMNS = 9;
     private static final int ROWS = 11;
@@ -21,11 +24,9 @@ public class GameSetup {
         Scanner in = new Scanner(System.in);
         System.out.println("------------- Welcome to Code Soccer -------------");
 
-        //TODO give programmers chance to just send an empty opponent
         GameEvaluation eval = new GameEvaluation(new SoccerGame(COLUMNS, ROWS), new NaiveOpponent("Naive1T", GoalLocationType.TOP), new NaiveOpponent("Naive2B", GoalLocationType.BOTTOM));
-//        GameEvaluation eval = new GameEvaluation(new SoccerGame(COLUMNS, ROWS), new NaiveOpponent("Naive1T", GoalLocationType.TOP), new HumanOpponent("Woodz", in, GoalLocationType.BOTTOM));
 
-        return eval.play(in);//TODO probably setup playing field so we can search in it
+        return eval.play();
     }
 
     /**

@@ -74,13 +74,6 @@ public class SoccerGame {
      * @return true if desired move is valid, otherwise false.
      */
     public boolean isMoveValid(FieldPoint dest) {
-//        boolean inside = isPointInsideBounds(dest);
-//        boolean move = isMoveMade(dest);
-//        boolean close = isPointCloseEnough(dest);
-//        boolean hist = !isMoveInHistory(dest);
-//        boolean same = !(isMoveOnSameBounds(currentPosition, dest));
-//        boolean goals = isPointInsideGoalsAndCloseEnough(dest);
-
         return (isPointInsideBounds(dest) && isMoveMade(dest) &&
                 isPointCloseEnough(dest) && !isMoveInHistory(dest) &&
                 !(isMoveOnSameBounds(currentPosition, dest))) ||

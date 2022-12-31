@@ -1,5 +1,10 @@
-package stc.soccer;
+package stc.soccer.core;
 
+/**
+ * This record represents a point in a field as an object.
+ * @param column in a field.
+ * @param row in a field.
+ */
 public record FieldPoint(int column, int row) {
 
     @Override

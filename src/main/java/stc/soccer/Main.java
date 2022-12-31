@@ -1,8 +1,9 @@
 package stc.soccer;
 
+import stc.soccer.core.GameSetup;
+
 public class Main {
     public static void main(String[] args) {
-        GameSetup.setupGame();
-        System.out.println("The game has ended.");
+        System.out.println(GameSetup.setupGame().toString() + " is the winner!!");
     }
 }
